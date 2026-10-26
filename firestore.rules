@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Basic starter rule: only authenticated accounts can access the family data.
+    // IMPORTANT: use this only if you create the two accounts yourself and disable
+    // public account creation in Firebase Authentication. For stronger isolation,
+    // upgrade to per-family membership rules before adding any other users.
+    match /families/{familyId}/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
