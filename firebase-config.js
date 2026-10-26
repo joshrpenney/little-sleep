@@ -1,11 +1,11 @@
-// Copy your web app configuration from Firebase Console > Project settings > Your apps.
-// Keep FAMILY_SPACE_ID identical on both phones. Choose a long, hard-to-guess value.
 export const firebaseConfig = {
-  apiKey: 'PASTE_API_KEY_HERE',
-  authDomain: 'PASTE_PROJECT_ID.firebaseapp.com',
-  projectId: 'PASTE_PROJECT_ID',
-  storageBucket: 'PASTE_PROJECT_ID.appspot.com',
-  messagingSenderId: 'PASTE_MESSAGING_SENDER_ID',
-  appId: 'PASTE_APP_ID'
+  apiKey: 'AIzaSyDZqGDeIw6s9hWns8QkELXh942ccMMMhsE',
+  authDomain: 'little-sleep-tracker.firebaseapp.com',
+  projectId: 'little-sleep-tracker',
+  storageBucket: 'little-sleep-tracker.firebasestorage.app',
+  messagingSenderId: '297001257149',
+  appId: '1:297001257149:web:e3c7384a607acfadee0fd4',
+  measurementId: 'G-38DBDM0VSQ'
 };
-export const FAMILY_SPACE_ID = 'replace-with-a-long-random-family-space-id';
+
+export const FAMILY_SPACE_ID = 'ls-family-8d4f91c7a62e5b30f6a1';
