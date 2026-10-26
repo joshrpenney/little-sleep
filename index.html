@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f1eb" />
+  <title>Little Sleep — Baby Sleep Tracker</title>
+  <style>
+    :root{--ink:#28332f;--muted:#68746d;--paper:#fbfaf7;--card:#fff;--sage:#dce8df;--sage-dark:#426653;--peach:#f5e4d8;--line:#e7e6df;--danger:#a83e3e;--shadow:0 8px 28px #28332f0c}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input,select{font:inherit} button{cursor:pointer;border:0;border-radius:14px;padding:13px 16px;font-weight:650;transition:transform .08s}button:active{transform:scale(.985)}
+    .wrap{max-width:780px;margin:auto;padding:22px 16px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.moon{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;background:var(--sage);font-size:23px}.brand h1{font-size:22px;margin:0;letter-spacing:-.5px}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.pill{font-size:12px;background:#edf1eb;color:var(--sage-dark);border-radius:99px;padding:7px 10px;white-space:nowrap}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}.hero{background:linear-gradient(135deg,#edf4ed,#f9f0e8);border:0}.eyebrow{text-transform:uppercase;letter-spacing:1.2px;font-size:11px;font-weight:750;color:var(--muted);margin:0 0 7px}.hero h2{font-size:24px;line-height:1.2;letter-spacing:-.6px;margin:0 0 8px}.sub{color:var(--muted);margin:0}.timer{font-size:clamp(40px,10vw,60px);font-weight:750;letter-spacing:-2px;line-height:1.1;margin:18px 0 16px;font-variant-numeric:tabular-nums}.actions{display:flex;gap:10px;flex-wrap:wrap}.primary{background:var(--sage-dark);color:white;flex:1;min-width:150px}.secondary{background:#f0f1ec;color:var(--ink)}.danger{background:#f9e7e5;color:var(--danger)}
+    .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.stat .num{font-size:24px;font-weight:750;letter-spacing:-.5px}.stat .label{font-size:12px;color:var(--muted);margin-top:3px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.section-head h3{margin:0;font-size:17px}.tiny{font-size:12px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12px;font-weight:700;color:var(--muted)}.field input,.field select{width:100%;border:1px solid #dfe3dc;background:#fff;border-radius:12px;padding:11px 12px;color:var(--ink);min-height:45px}.field.full{grid-column:1/-1}.schedule-list,.history-list{display:flex;flex-direction:column;gap:9px}.schedule-row,.history-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:#fff}.schedule-row strong,.history-row strong{display:block}.schedule-row small,.history-row small{color:var(--muted)}.time-tag{background:var(--peach);padding:7px 10px;border-radius:10px;font-weight:700;white-space:nowrap}.recommend{background:#f5f7f2;border-radius:16px;padding:15px}.recommend h4{margin:0 0 5px;font-size:14px}.recommend p{margin:0;color:var(--muted)}.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0 0}.hidden{display:none!important}.auth{max-width:420px;margin:8vh auto;padding:22px}.error{color:var(--danger);font-size:13px;margin-top:10px}.status{font-size:12px;color:var(--muted)}.icon-button{background:transparent;color:var(--muted);padding:6px 8px}.history-row .meta{min-width:0}.history-row .meta strong{overflow-wrap:anywhere}.right{text-align:right;white-space:nowrap}.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 12px 0}
+    @media(min-width:620px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.wrap{padding-top:30px}.panel{padding:23px}}
+  </style>
+</head>
+<body>
+  <div id="authView" class="panel auth">
+    <div class="brand"><div class="moon">☾</div><div><h1>Little Sleep</h1><p>Your family sleep log</p></div></div>
+    <p class="sub" style="margin:18px 0">Sign in to keep your baby's sleep log synced between both phones.</p>
+    <form id="loginForm">
+      <div class="field" style="margin-bottom:12px"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"></div>
+      <div class="field" style="margin-bottom:14px"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Your password"></div>
+      <button class="primary" style="width:100%" type="submit">Sign in</button><p id="authError" class="error"></p>
+    </form>
+    <p class="notice">First, create two user accounts in Firebase Authentication (one for each of you). This app intentionally has no public sign-up form.</p>
+  </div>
+
+  <main id="appView" class="wrap hidden">
+    <header class="top"><div class="brand"><div class="moon">☾</div><div><h1>Little Sleep</h1><p>Small steps, softer nights.</p></div></div><div><span id="syncStatus" class="pill">Connecting…</span><button id="signOut" class="icon-button">Sign out</button></div></header>
+    <section class="panel hero">
+      <p class="eyebrow" id="currentLabel">Sleep tracker</p><h2 id="heroTitle">Ready when you are</h2><p class="sub" id="heroSub">Start a sleep session when she settles.</p>
+      <div class="timer" id="timer">00:00:00</div>
+      <div class="actions"><button id="startSleep" class="primary">▶ Start sleep</button><button id="stopSleep" class="danger hidden">■ Stop sleep</button></div>
+      <p class="notice" id="sessionNote">The timer keeps its start time if you close the page. Open it again to see the updated duration.</p>
+    </section>
+    <div class="stats">
+      <div class="stat"><div class="num" id="todaySleep">0h 0m</div><div class="label">Sleep logged today</div></div>
+      <div class="stat"><div class="num" id="todayNaps">0</div><div class="label">Sleep sessions today</div></div>
+      <div class="stat"><div class="num" id="lastSleep">—</div><div class="label">Last sleep duration</div></div>
+    </div>
+    <section class="panel"><div class="section-head"><h3>Next sleep suggestion</h3><span class="pill">Flexible guide</span></div><div class="recommend"><h4 id="nextTitle">Log a sleep to get a suggestion</h4><p id="nextText">Once a sleep ends, we'll estimate a possible next sleep window using your preferred routine and wake window.</p></div><p class="notice">This is a planning aid, not medical advice. Babies' sleep cues and needs vary; follow her cues rather than forcing a schedule.</p></section>
+    <section class="panel"><div class="section-head"><h3>Our preferred routine</h3><span class="tiny">Shared between your phones</span></div>
+      <form id="settingsForm"><div class="form-grid">
+        <div class="field"><label for="wakeTime">Preferred morning start</label><input id="wakeTime" type="time" value="07:00" required></div>
+        <div class="field"><label for="bedTime">Preferred bedtime</label><input id="bedTime" type="time" value="19:30" required></div>
+        <div class="field"><label for="wakeMin">Wake window — minimum (minutes)</label><input id="wakeMin" type="number" min="20" max="240" step="5" value="45" required></div>
+        <div class="field"><label for="wakeMax">Wake window — maximum (minutes)</label><input id="wakeMax" type="number" min="20" max="300" step="5" value="75" required></div>
+        <div class="field full"><button class="secondary" type="submit">Save preferred routine</button></div>
+      </div></form><p class="notice">Wake-window values are editable starting points, not a prescription. For a very young baby, use sleepy cues and your health visitor's advice as the priority.</p>
+    </section>
+    <section class="panel"><div class="section-head"><h3>Today's sleep log</h3><span id="historyCount" class="tiny">0 entries</span></div><div id="historyList" class="history-list"><div class="empty">No sleep sessions logged yet.</div></div></section>
+    <div class="footer">Made for your family · Data syncs when connected to the internet</div>
+  </main>
+
+  <!-- Firebase configuration is added in firebase-config.js -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { getFirestore, doc, collection, addDoc, setDoc, onSnapshot, query, orderBy, limit, serverTimestamp, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { firebaseConfig, FAMILY_SPACE_ID } from './firebase-config.js';
+
+    const $ = id => document.getElementById(id);
+    const authView=$('authView'), appView=$('appView');
+    let auth, db, activeUser=null, unsubSettings=null, unsubSessions=null, settings={wakeTime:'07:00',bedTime:'19:30',wakeMin:45,wakeMax:75}, sessions=[], currentSleep=null, tickHandle=null;
+    const familyRef = () => doc(db,'families',FAMILY_SPACE_ID);
+    const sessionsRef = () => collection(db,'families',FAMILY_SPACE_ID,'sleepSessions');
+    const settingsRef = () => doc(db,'families',FAMILY_SPACE_ID,'settings','routine');
+
+    function showError(message){ $('authError').textContent=message; }
+    function fmtDuration(ms){const total=Math.max(0,Math.floor(ms/1000));const h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+    function shortDuration(ms){const mins=Math.max(0,Math.round(ms/60000));const h=Math.floor(mins/60),m=mins%60;return h?`${h}h ${m}m`:`${m}m`;}
+    function localDateKey(value){const d=new Date(value);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+    function clock(value){return new Date(value).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+    function dateTime(value){return new Date(value).toLocaleString([], {weekday:'short',hour:'2-digit',minute:'2-digit'});}
+    function todaySessions(){const key=localDateKey(Date.now());return sessions.filter(s=>localDateKey(s.startAt)===key);}
+    function render(){
+      const active=sessions.find(s=>!s.endAt); currentSleep=active||null;
+      $('startSleep').classList.toggle('hidden',!!active);$('stopSleep').classList.toggle('hidden',!active);
+      $('currentLabel').textContent=active?'Sleep in progress':'Sleep tracker';$('heroTitle').textContent=active?'She is sleeping':'Ready when you are';$('heroSub').textContent=active?`Started at ${clock(active.startAt)}. The timer updates live.`:'Start a sleep session when she settles.';
+      $('timer').textContent=active?fmtDuration(Date.now()-active.startAt):'00:00:00';
+      const today=todaySessions();const total=today.reduce((sum,s)=>sum+Math.max(0,(s.endAt||Date.now())-s.startAt),0);
+      $('todaySleep').textContent=shortDuration(total);$('todayNaps').textContent=today.length;
+      const completed=sessions.filter(s=>s.endAt).sort((a,b)=>b.endAt-a.endAt);$('lastSleep').textContent=completed.length?shortDuration(completed[0].endAt-completed[0].startAt):'—';
+      renderRecommendation(active,completed[0]);renderHistory();
+    }
+    function renderRecommendation(active,last){
+      if(active){$('nextTitle').textContent='Let her sleep, and follow her cues';$('nextText').textContent='When she wakes, stop the timer. The next suggestion will be based on her wake time and your chosen wake window.';return;}
+      if(!last){$('nextTitle').textContent='Log her first sleep';$('nextText').textContent='After you finish a sleep session, we can estimate a possible next window.';return;}
+      const min=Number(settings.wakeMin)||45,max=Number(settings.wakeMax)||75;const earliest=last.endAt+min*60000,latest=last.endAt+max*60000;
+      $('nextTitle').textContent=`Possible next sleep: ${clock(earliest)}–${clock(latest)}`;
+      const now=Date.now();let message=`Based on her last wake time (${clock(last.endAt)}) and your ${min}–${max} minute wake window.`;
+      if(now<earliest)message+=` That's about ${shortDuration(earliest-now)} until the start of the suggested window.`;else if(now<=latest)message+=' You are within the suggested window; watch for her sleepy cues.';else message+=' This window has passed; use her cues and current circumstances rather than trying to catch up to the clock.';
+      $('nextText').textContent=message;
+    }
+    function renderHistory(){
+      const list=$('historyList');const today=todaySessions().sort((a,b)=>b.startAt-a.startAt);$('historyCount').textContent=`${today.length} ${today.length===1?'entry':'entries'}`;
+      if(!today.length){list.innerHTML='<div class="empty">No sleep sessions logged today.</div>';return;}
+      list.innerHTML=today.map(s=>{const duration=s.endAt?shortDuration(s.endAt-s.startAt):'In progress';return `<div class="history-row"><div class="meta"><strong>${clock(s.startAt)}${s.endAt?` – ${clock(s.endAt)}`:' – now'}</strong><small>${s.endAt?'Sleep completed':'Currently sleeping'}${s.note?` · ${escapeHtml(s.note)}`:''}</small></div><div class="right"><strong>${duration}</strong>${s.endAt?`<button class="icon-button" data-delete="${s.id}" aria-label="Delete sleep entry">Delete</button>`:''}</div></div>`;}).join('');
+      list.querySelectorAll('[data-delete]').forEach(btn=>btn.addEventListener('click',async()=>{if(!confirm('Delete this sleep entry for both phones?'))return;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',btn.dataset.delete),{deleted:true});}catch(e){alert('Could not delete this entry. Check your connection.');}}));
+    }
+    function escapeHtml(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    $('loginForm').addEventListener('submit',async e=>{e.preventDefault();showError('');try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);}catch(err){showError('Sign-in failed. Check the email and password, and make sure the account exists in Firebase.');}});
+    $('signOut').addEventListener('click',()=>signOut(auth));
+    $('startSleep').addEventListener('click',async()=>{if(!activeUser)return;try{await addDoc(sessionsRef(),{startAt:Date.now(),endAt:null,createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false});}catch(e){alert('Could not start the timer. Check your internet connection.');}});
+    $('stopSleep').addEventListener('click',async()=>{if(!currentSleep)return;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',currentSleep.id),{endAt:Date.now(),endedBy:activeUser.uid});}catch(e){alert('Could not stop the timer. Check your internet connection.');}});
+    $('settingsForm').addEventListener('submit',async e=>{e.preventDefault();const min=Number($('wakeMin').value),max=Number($('wakeMax').value);if(min>max){alert('Minimum wake window must be less than or equal to maximum.');return;}try{await setDoc(settingsRef(),{wakeTime:$('wakeTime').value,bedTime:$('bedTime').value,wakeMin:min,wakeMax:max,updatedBy:activeUser.uid,updatedAt:serverTimestamp()},{merge:true});alert('Routine saved and synced.');}catch(e){alert('Could not save the routine. Check your connection.');}});
+
+    try{
+      if(!firebaseConfig.apiKey || firebaseConfig.apiKey==='PASTE_API_KEY_HERE') throw new Error('Add your Firebase configuration to firebase-config.js first.');
+      const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);
+      onAuthStateChanged(auth,user=>{
+        activeUser=user;authView.classList.toggle('hidden',!!user);appView.classList.toggle('hidden',!user);
+        if(unsubSettings){unsubSettings();unsubSettings=null;}if(unsubSessions){unsubSessions();unsubSessions=null;}
+        if(!user){if(tickHandle)clearInterval(tickHandle);return;}
+        $('syncStatus').textContent='Syncing…';
+        unsubSettings=onSnapshot(settingsRef(),snap=>{if(snap.exists()){settings={...settings,...snap.data()};$('wakeTime').value=settings.wakeTime||'07:00';$('bedTime').value=settings.bedTime||'19:30';$('wakeMin').value=settings.wakeMin??45;$('wakeMax').value=settings.wakeMax??75;}render();},()=>{$('syncStatus').textContent='Sync issue';});
+        const q=query(sessionsRef(),orderBy('startAt','desc'),limit(150));
+        unsubSessions=onSnapshot(q,snap=>{sessions=snap.docs.map(d=>({id:d.id,...d.data()})).filter(s=>!s.deleted);$('syncStatus').textContent='Synced live';render();},()=>{$('syncStatus').textContent='Sync issue';});
+        if(tickHandle)clearInterval(tickHandle);tickHandle=setInterval(()=>{if(activeUser)render();},1000);
+      });
+    }catch(err){showError(err.message);}
+  </script>
+</body>
+</html>
