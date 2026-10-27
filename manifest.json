@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Hollie Tracker",
+  "short_name": "Hollie",
+  "description": "A calm, shared baby tracker for sleep, feeds and nappies.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff7fa",
+  "theme_color": "#e65d8b",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
