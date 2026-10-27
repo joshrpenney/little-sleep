@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f7f3ed">
 <meta name="description" content="A calm, shared baby sleep tracker for your family.">
-<title>Little Sleep — Baby Sleep Tracker</title>
+<title>Hollie Tracker — Baby Tracker</title>
 <style>
 :root{color-scheme:light;--ink:#2d3932;--muted:#718078;--paper:#f8f5ef;--card:#fffefa;--sage:#e1ebe1;--sage-dark:#426653;--peach:#f6e5da;--blush:#f7e9e7;--line:#e9e5dc;--danger:#a74742;--shadow:0 10px 30px rgba(45,57,50,.055);--radius:24px}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#f2f2e9 0,transparent 42%),var(--paper);color:var(--ink);font:16px/1.48 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer;border:0;border-radius:15px;padding:13px 16px;font-weight:680;transition:transform .08s}button:active{transform:scale(.985)}button:disabled{opacity:.55;cursor:not-allowed}
@@ -15,21 +15,52 @@
 .history-list{display:flex;flex-direction:column;gap:9px}.history-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff}.meta{min-width:0;overflow-wrap:anywhere}.history-row strong{display:block;font-size:13px}.history-row small{color:var(--muted);font-size:11px}.right{display:flex;align-items:flex-end;flex-direction:column;gap:4px;white-space:nowrap}.row-actions{display:flex;gap:5px}.mini-btn{background:#f0f1eb;color:var(--ink);padding:6px 9px;font-size:11px;border-radius:10px}.mini-btn.delete{background:#fbebea;color:var(--danger)}.empty{padding:20px 14px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;font-size:13px}
 .timeline-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-bottom:8px}.timeline-track{height:27px;background:#f0eee7;border-radius:10px;position:relative;overflow:hidden;border:1px solid #e9e5dc}.timeline-segment{position:absolute;top:3px;bottom:3px;min-width:3px;border-radius:5px;background:#88a58d}.timeline-segment.active{background:#426653;box-shadow:0 0 0 2px rgba(66,102,83,.13)}.timeline-legend{display:flex;gap:13px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;background:#88a58d;margin-right:5px}.dot.active{background:#426653}.week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.day-col{background:#f6f4ee;border-radius:12px;padding:8px 3px;text-align:center;min-width:0}.day-name{font-size:10px;color:var(--muted)}.day-value{font-size:11px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}.day-bar{height:45px;display:flex;align-items:flex-end;margin:7px auto 0;width:9px;background:#e6e5dc;border-radius:8px;overflow:hidden}.day-fill{width:100%;background:#88a58d;border-radius:8px 8px 0 0}.footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 12px 0}.hidden{display:none!important}.auth{max-width:420px;margin:8vh auto;padding:23px}.error{color:var(--danger);font-size:12px;margin-top:10px}.modal-backdrop{position:fixed;inset:0;background:rgba(35,45,39,.36);display:flex;align-items:flex-end;justify-content:center;padding:14px;z-index:20}.modal{width:100%;max-width:480px;background:var(--paper);border-radius:24px;padding:21px;box-shadow:0 20px 60px #18251c33;max-height:90dvh;overflow:auto}.modal h3{margin:0 0 15px;font-size:19px}.modal-actions{display:flex;gap:9px;margin-top:16px}.modal-actions button{flex:1}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#2d3932;color:white;padding:11px 16px;border-radius:14px;font-size:12px;box-shadow:var(--shadow);z-index:30;max-width:calc(100% - 28px);text-align:center}
 @media(min-width:620px){.wrap{padding:28px 20px 50px}.panel{padding:23px}.hero{padding:27px}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.modal-backdrop{align-items:center}.num{font-size:25px}}@media(max-width:380px){.brand h1{font-size:20px}.panel{padding:16px}.hero{padding:19px}.timer{font-size:42px}.history-row{padding:10px}.week-grid{gap:3px}}
+
+/* Hollie Tracker: soft pink and cream theme */
+:root{--ink:#30343b;--muted:#858080;--paper:#faf6f2;--card:#fffefd;--sage:#fbe3eb;--sage-dark:#d94f7b;--peach:#fbe7e7;--blush:#fde9ed;--line:#eee3e3;--danger:#b84d64;--shadow:0 10px 30px rgba(110,65,79,.07)}
+body{background:radial-gradient(ellipse at top left,#fff0f4 0,transparent 44%),var(--paper)}
+.moon{background:#fbe2eb;color:#d94f7b;border-radius:50%}
+.brand h1{color:#d94f7b;font-size:25px;letter-spacing:-.7px}
+.brand p{font-size:12px}
+.pill{background:#fde8ef;color:#b83f68}
+.hero{background:linear-gradient(135deg,#fde5ed 0%,#fff7f5 58%,#fce9e8 100%)}
+.hero:after{color:rgba(217,79,123,.10)}
+.eyebrow{color:#b84d73}
+.primary{background:#e65d8b;color:white}
+.primary:hover{background:#d94f7b}
+.secondary{background:#fce8ef;color:#963d5d}
+.danger{background:#fde9ed;color:#b84d64}
+.field input,.field select{border-color:#eadfe2;background:#fffefd}
+.recommend{background:#fff0f4}
+.timeline-track{background:#f8e9ed;border-color:#f0dfe5}
+.timeline-segment{background:#f09ab6}
+.timeline-segment.active{background:#d94f7b;box-shadow:0 0 0 2px rgba(217,79,123,.15)}
+.dot{background:#f09ab6}.dot.active{background:#d94f7b}
+.day-col{background:#fff1f4}.day-bar{background:#f5dfe7}.day-fill{background:#e982a5}
+.mini-btn{background:#fce8ef;color:#963d5d}.mini-btn.delete{background:#fde9ed;color:#b84d64}
+.toast{background:#873e5a}
+.nav-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:-5px 0 14px}
+.nav-tab{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;background:#fce8ef;color:#8e3c59;border:1px solid transparent;border-radius:18px;padding:13px 8px;font-size:14px;font-weight:750}
+.nav-tab .nav-icon{font-size:22px;line-height:1}
+.nav-tab.active{background:#e65d8b;color:white;box-shadow:0 5px 14px rgba(217,79,123,.15)}
+#sleepPanel,#feedPanel,#nappyPanel{scroll-margin-top:14px}
+@media(max-width:380px){.nav-tab{font-size:12px;gap:5px;padding:12px 4px}.nav-tab .nav-icon{font-size:19px}.brand h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div id="authView" class="panel auth">
-  <div class="brand"><div class="moon">☾</div><div><h1>Little Sleep</h1><p>Your family sleep log</p></div></div>
+  <div class="brand"><div class="moon">♡</div><div><h1>Hollie Tracker</h1><p>Sleep · Feeds · Nappies</p></div></div>
   <p class="sub" style="margin:18px 0">Sign in to keep your baby's sleep log synced between both phones.</p>
   <form id="loginForm"><div class="field" style="margin-bottom:12px"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"></div><div class="field" style="margin-bottom:14px"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Your password"></div><button class="primary" style="width:100%" type="submit">Sign in</button><p id="authError" class="error" role="alert"></p></form>
   <p class="notice">Sign-in accounts are managed privately in Firebase Authentication.</p>
 </div>
 <main id="appView" class="wrap hidden">
-<header class="top"><div class="brand"><div class="moon">☾</div><div><h1>Little Sleep</h1><p>Small steps, softer nights.</p></div></div><div class="top-right"><span id="syncStatus" class="pill">Connecting…</span><button id="signOut" class="icon-button">Sign out</button></div></header>
-<section class="panel hero"><p class="eyebrow" id="currentLabel">Sleep tracker</p><h2 id="heroTitle">Ready when you are</h2><p class="sub" id="heroSub">Start a sleep session when she settles.</p><div class="timer" id="timer">00:00:00</div><div class="actions"><button id="startSleep" class="primary">▶ Start sleep</button><button id="stopSleep" class="danger hidden">■ Stop sleep</button></div><p class="notice">The timer keeps its start time if you close the page. Open it again to see the updated duration.</p></section>
+<header class="top"><div class="brand"><div class="moon">♡</div><div><h1>Hollie Tracker</h1><p>Sleep · Feeds · Nappies · All in one place</p></div></div><div class="top-right"><span id="syncStatus" class="pill">Connecting…</span><button id="signOut" class="icon-button">Sign out</button></div></header>
+<nav class="nav-tabs" aria-label="Tracker sections"><button class="nav-tab active" type="button" data-jump="sleepPanel"><span class="nav-icon">☾</span>Sleep</button><button class="nav-tab" type="button" data-jump="feedPanel"><span class="nav-icon">🍼</span>Feeds</button><button class="nav-tab" type="button" data-jump="nappyPanel"><span class="nav-icon">🩲</span>Nappies</button></nav>
+<section id="sleepPanel" class="panel hero"><p class="eyebrow" id="currentLabel">Sleep tracker</p><h2 id="heroTitle">Ready when you are</h2><p class="sub" id="heroSub">Start a sleep session when she settles.</p><div class="timer" id="timer">00:00:00</div><div class="actions"><button id="startSleep" class="primary">▶ Start sleep</button><button id="stopSleep" class="danger hidden">■ Stop sleep</button></div><p class="notice">The timer keeps its start time if you close the page. Open it again to see the updated duration.</p></section>
 <div class="stats"><div class="stat"><div class="num" id="todaySleep">0h 0m</div><div class="label">Sleep logged today</div></div><div class="stat"><div class="num" id="todayNaps">0</div><div class="label">Sleep sessions today</div></div><div class="stat"><div class="num" id="lastSleep">—</div><div class="label">Last sleep duration</div></div></div>
-<section class="panel">
-  <div class="section-head"><h3>Log a feed</h3><span class="tiny">Shared with both phones</span></div>
+<section id="feedPanel" class="panel">
+  <div class="section-head"><h3>🍼 Log a feed</h3><span class="tiny">Shared with both phones</span></div>
   <form id="feedForm">
     <div class="form-grid">
       <div class="field"><label for="feedType">Feed type</label><select id="feedType" required><option value="Breastfeeding">Breastfeeding</option><option value="Expressed milk">Expressed milk</option><option value="Formula">Formula</option></select></div>
@@ -42,8 +73,8 @@
     </div>
   </form>
 </section>
-<section class="panel">
-  <div class="section-head"><h3>Log a nappy</h3><span class="tiny">Shared with both phones</span></div>
+<section id="nappyPanel" class="panel">
+  <div class="section-head"><h3>🩲 Log a nappy</h3><span class="tiny">Shared with both phones</span></div>
   <form id="nappyForm">
     <div class="form-grid">
       <div class="field"><label for="nappyType">Nappy type</label><select id="nappyType" required><option value="Wet">Wet</option><option value="Dirty">Dirty</option><option value="Wet and dirty">Wet and dirty</option></select></div>
@@ -63,7 +94,7 @@
 <section class="panel"><div class="section-head"><h3>Our preferred routine</h3><span class="tiny">Shared between your phones</span></div><form id="settingsForm"><div class="form-grid"><div class="field"><label for="wakeTime">Preferred morning start</label><input id="wakeTime" type="time" value="07:00" required></div><div class="field"><label for="bedTime">Preferred bedtime</label><input id="bedTime" type="time" value="19:30" required></div><div class="field"><label for="wakeMin">Wake window — minimum (minutes)</label><input id="wakeMin" type="number" min="20" max="240" step="5" value="45" required></div><div class="field"><label for="wakeMax">Wake window — maximum (minutes)</label><input id="wakeMax" type="number" min="20" max="300" step="5" value="75" required></div><div class="field full"><button id="saveSettings" class="secondary" type="submit">Save preferred routine</button></div></div></form><p class="notice">Wake-window values are editable starting points, not a prescription. For a very young baby, use sleepy cues and your health visitor's advice as the priority.</p></section>
 <section class="panel"><div class="section-head"><h3>This week</h3><span id="weekTotal" class="tiny">0 total</span></div><div id="weekGrid" class="week-grid"></div><p class="notice">Daily totals include the part of a sleep session that falls on that calendar day, including sessions crossing midnight.</p></section>
 <section class="panel"><div class="section-head"><h3>Today's sleep log</h3><span id="historyCount" class="tiny">0 entries</span></div><div id="historyList" class="history-list"><div class="empty">No sleep sessions logged yet.</div></div><p class="notice">Tap Edit to correct a start or end time. Changes sync to both phones.</p></section>
-<div class="footer">Made for your family · Data syncs when connected to the internet</div>
+<div class="footer">Hollie Tracker · Made with love for your family</div>
 </main>
 <div id="editBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div class="modal"><h3 id="editTitle">Edit sleep session</h3><form id="editForm"><div class="form-grid"><div class="field"><label for="editStartDate">Start date</label><input id="editStartDate" type="date" required></div><div class="field"><label for="editStartTime">Start time</label><input id="editStartTime" type="time" required></div><div class="field"><label for="editEndDate">End date</label><input id="editEndDate" type="date"></div><div class="field"><label for="editEndTime">End time</label><input id="editEndTime" type="time"></div></div><p class="notice">Leave both end fields blank if the sleep is still in progress.</p><div class="modal-actions"><button type="button" id="cancelEdit" class="secondary">Cancel</button><button type="submit" class="primary">Save changes</button></div><p id="editError" class="error" role="alert"></p></form></div></div>
 <div id="toast" class="toast hidden" role="status"></div>
@@ -124,6 +155,7 @@ $('startSleep').addEventListener('click',async()=>{if(!activeUser)return;if(visi
 $('stopSleep').addEventListener('click',async()=>{if(!currentSleep)return;$('stopSleep').disabled=true;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',currentSleep.id),{endAt:Date.now(),endedBy:activeUser.uid});notify('Sleep session saved.')}catch(e){alert('Could not stop the timer. Check your internet connection.')}finally{$('stopSleep').disabled=false}});
 $('settingsForm').addEventListener('submit',async e=>{e.preventDefault();const min=Number($('wakeMin').value),max=Number($('wakeMax').value);if(min>max){alert('Minimum wake window must be less than or equal to maximum.');return}try{await setDoc(settingsRef(),{wakeTime:$('wakeTime').value,bedTime:$('bedTime').value,wakeMin:min,wakeMax:max,updatedBy:activeUser.uid,updatedAt:serverTimestamp()},{merge:true});notify('Routine saved and synced.')}catch(e){alert('Could not save the routine. Check your connection.')}});
 $('feedTime').value=localDateTimeInput();$('nappyTime').value=localDateTimeInput();
+document.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener('click',()=>{document.getElementById(button.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav-tab').forEach(tab=>tab.classList.toggle('active',tab===button));}));
 $('feedForm').addEventListener('submit',async e=>{e.preventDefault();if(!activeUser)return;const amount=$('feedAmount').value,duration=$('feedDuration').value;const record={feedType:$('feedType').value,timeAt:new Date($('feedTime').value).getTime(),amountMl:amount===''?null:Number(amount),durationMinutes:duration===''?null:Number(duration),side:$('feedSide').value||null,note:escapeText($('feedNote').value),createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false};if(!Number.isFinite(record.timeAt)){alert('Please enter a valid feed time.');return}try{await addDoc(feedsRef(),record);$('feedAmount').value='';$('feedDuration').value='';$('feedSide').value='';$('feedNote').value='';$('feedTime').value=localDateTimeInput();notify('Feed saved and synced.')}catch(err){alert('Could not save the feed. Check your connection.')}});
 $('nappyForm').addEventListener('submit',async e=>{e.preventDefault();if(!activeUser)return;const record={nappyType:$('nappyType').value,timeAt:new Date($('nappyTime').value).getTime(),note:escapeText($('nappyNote').value),createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false};if(!Number.isFinite(record.timeAt)){alert('Please enter a valid nappy time.');return}try{await addDoc(nappiesRef(),record);$('nappyNote').value='';$('nappyTime').value=localDateTimeInput();notify('Nappy change saved and synced.')}catch(err){alert('Could not save the nappy change. Check your connection.')}});
 try{if(!firebaseConfig.apiKey||firebaseConfig.apiKey==='PASTE_API_KEY_HERE')throw new Error('Add your Firebase configuration to firebase-config.js first.');const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);onAuthStateChanged(auth,user=>{activeUser=user;authView.classList.toggle('hidden',!!user);appView.classList.toggle('hidden',!user);if(unsubSettings){unsubSettings();unsubSettings=null}if(unsubSessions){unsubSessions();unsubSessions=null}if(unsubFeeds){unsubFeeds();unsubFeeds=null}if(unsubNappies){unsubNappies();unsubNappies=null}if(tickHandle){clearInterval(tickHandle);tickHandle=null}if(!user)return;$('syncStatus').textContent='Syncing…';unsubSettings=onSnapshot(settingsRef(),snap=>{if(snap.exists()){settings={...settings,...snap.data()};$('wakeTime').value=settings.wakeTime||'07:00';$('bedTime').value=settings.bedTime||'19:30';$('wakeMin').value=settings.wakeMin??45;$('wakeMax').value=settings.wakeMax??75}render()},()=>$('syncStatus').textContent='Sync issue');const q=query(sessionsRef(),orderBy('startAt','desc'),limit(300));unsubSessions=onSnapshot(q,snap=>{sessions=snap.docs.map(d=>({id:d.id,...d.data()}));$('syncStatus').textContent='Synced live';render()},()=>$('syncStatus').textContent='Sync issue');unsubFeeds=onSnapshot(query(feedsRef(),orderBy('timeAt','desc'),limit(300)),snap=>{feeds=snap.docs.map(d=>({id:d.id,...d.data()}));renderActivity()},()=>{$('syncStatus').textContent='Sync issue'});unsubNappies=onSnapshot(query(nappiesRef(),orderBy('timeAt','desc'),limit(300)),snap=>{nappies=snap.docs.map(d=>({id:d.id,...d.data()}));renderActivity()},()=>{$('syncStatus').textContent='Sync issue'});tickHandle=setInterval(()=>{if(activeUser)render()},1000)})}catch(err){showError(err.message)}
