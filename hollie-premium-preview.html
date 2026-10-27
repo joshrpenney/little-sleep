@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e65d8b">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="description" content="A calm, shared baby sleep tracker for your family.">
+<title>Hollie Tracker — Baby Tracker</title>
+<style>
+:root{color-scheme:light;--ink:#2d3932;--muted:#718078;--paper:#f8f5ef;--card:#fffefa;--sage:#e1ebe1;--sage-dark:#426653;--peach:#f6e5da;--blush:#f7e9e7;--line:#e9e5dc;--danger:#a74742;--shadow:0 10px 30px rgba(45,57,50,.055);--radius:24px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#f2f2e9 0,transparent 42%),var(--paper);color:var(--ink);font:16px/1.48 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer;border:0;border-radius:15px;padding:13px 16px;font-weight:680;transition:transform .08s}button:active{transform:scale(.985)}button:disabled{opacity:.55;cursor:not-allowed}
+.wrap{max-width:820px;margin:auto;padding:20px 15px 46px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:11px;min-width:0}.moon{display:grid;place-items:center;width:47px;height:47px;flex:0 0 47px;border-radius:17px;background:var(--sage);font-size:24px;color:var(--sage-dark)}.brand h1{font-size:22px;margin:0;letter-spacing:-.65px;line-height:1.15}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}.top-right{display:flex;align-items:flex-end;flex-direction:column;gap:5px}.pill{font-size:11px;background:#edf2eb;color:var(--sage-dark);border-radius:99px;padding:6px 10px;white-space:nowrap;font-weight:700}.icon-button{background:transparent;color:var(--muted);padding:6px 8px;font-size:12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:19px;margin-bottom:14px;box-shadow:var(--shadow)}.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#eaf1e8 0%,#f7f0e8 58%,#f8e9e2 100%);border:0;padding:23px}.hero:after{content:"☾";position:absolute;right:17px;top:3px;font-size:88px;line-height:1;color:rgba(66,102,83,.08);pointer-events:none}.hero>*{position:relative;z-index:1}.eyebrow{text-transform:uppercase;letter-spacing:1.35px;font-size:10px;font-weight:800;color:#68776c;margin:0 0 8px}.hero h2{font-size:25px;line-height:1.18;letter-spacing:-.7px;margin:0 0 7px}.sub{color:var(--muted);margin:0}.timer{font-size:clamp(43px,11vw,64px);font-weight:760;letter-spacing:-2.6px;line-height:1.08;margin:20px 0 19px;font-variant-numeric:tabular-nums}.actions{display:flex;gap:10px;flex-wrap:wrap}.primary{background:var(--sage-dark);color:white;flex:1;min-width:145px}.secondary{background:#edf0e9;color:var(--ink)}.danger{background:var(--blush);color:var(--danger)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.stat{background:rgba(255,254,250,.92);border:1px solid var(--line);border-radius:19px;padding:15px}.num{font-size:23px;font-weight:760;letter-spacing:-.6px;line-height:1.2;font-variant-numeric:tabular-nums}.label{font-size:11px;color:var(--muted);margin-top:5px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.section-head h3{margin:0;font-size:17px;letter-spacing:-.25px}.tiny{font-size:11px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:11px;font-weight:750;color:var(--muted)}.field input,.field select{width:100%;border:1px solid #dfe3dc;background:#fff;border-radius:13px;padding:11px 12px;color:var(--ink);min-height:45px}.field.full{grid-column:1/-1}.recommend{background:#f2f5ef;border-radius:18px;padding:16px}.recommend h4{margin:0 0 6px;font-size:14px}.recommend p{margin:0;color:var(--muted);font-size:13px}.notice{font-size:11px;color:var(--muted);line-height:1.55;margin:12px 0 0}
+.history-list{display:flex;flex-direction:column;gap:9px}.history-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff}.meta{min-width:0;overflow-wrap:anywhere}.history-row strong{display:block;font-size:13px}.history-row small{color:var(--muted);font-size:11px}.right{display:flex;align-items:flex-end;flex-direction:column;gap:4px;white-space:nowrap}.row-actions{display:flex;gap:5px}.mini-btn{background:#f0f1eb;color:var(--ink);padding:6px 9px;font-size:11px;border-radius:10px}.mini-btn.delete{background:#fbebea;color:var(--danger)}.empty{padding:20px 14px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;font-size:13px}
+.timeline-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-bottom:8px}.timeline-track{height:27px;background:#f0eee7;border-radius:10px;position:relative;overflow:hidden;border:1px solid #e9e5dc}.timeline-segment{position:absolute;top:3px;bottom:3px;min-width:3px;border-radius:5px;background:#88a58d}.timeline-segment.active{background:#426653;box-shadow:0 0 0 2px rgba(66,102,83,.13)}.timeline-legend{display:flex;gap:13px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;background:#88a58d;margin-right:5px}.dot.active{background:#426653}.week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.day-col{background:#f6f4ee;border-radius:12px;padding:8px 3px;text-align:center;min-width:0}.day-name{font-size:10px;color:var(--muted)}.day-value{font-size:11px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}.day-bar{height:45px;display:flex;align-items:flex-end;margin:7px auto 0;width:9px;background:#e6e5dc;border-radius:8px;overflow:hidden}.day-fill{width:100%;background:#88a58d;border-radius:8px 8px 0 0}.footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 12px 0}.hidden{display:none!important}.feed-mode{display:flex;gap:8px;margin:10px 0 16px}.feed-mode button{flex:1;background:#fce8ef;color:#963d5d}.feed-mode button.active{background:#e65d8b;color:#fff}.breast-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.breast-button{min-height:142px;background:#e76b96;color:#fff;border-radius:24px;font-size:19px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}.breast-button.right-breast{background:#f5c7d7;color:#963d5d}.breast-button.active{outline:4px solid #f8dce6;box-shadow:0 0 0 2px #d94f7b inset}.feed-timer{background:#fff5f8;border:1px solid #f4d5e0;border-radius:20px;padding:18px;text-align:center;margin:12px 0}.feed-clock{font-size:clamp(38px,10vw,52px);font-weight:800;color:#c94472;font-variant-numeric:tabular-nums}.feed-subtime{font-size:13px;color:var(--muted);margin-top:5px}.feed-controls{display:flex;gap:8px;flex-wrap:wrap}.feed-controls button{flex:1;min-width:130px}.auth{max-width:420px;margin:8vh auto;padding:23px}.error{color:var(--danger);font-size:12px;margin-top:10px}.modal-backdrop{position:fixed;inset:0;background:rgba(35,45,39,.36);display:flex;align-items:flex-end;justify-content:center;padding:14px;z-index:20}.modal{width:100%;max-width:480px;background:var(--paper);border-radius:24px;padding:21px;box-shadow:0 20px 60px #18251c33;max-height:90dvh;overflow:auto}.modal h3{margin:0 0 15px;font-size:19px}.modal-actions{display:flex;gap:9px;margin-top:16px}.modal-actions button{flex:1}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#2d3932;color:white;padding:11px 16px;border-radius:14px;font-size:12px;box-shadow:var(--shadow);z-index:30;max-width:calc(100% - 28px);text-align:center}
+@media(min-width:620px){.wrap{padding:28px 20px 50px}.panel{padding:23px}.hero{padding:27px}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.modal-backdrop{align-items:center}.num{font-size:25px}}@media(max-width:380px){.brand h1{font-size:20px}.panel{padding:16px}.hero{padding:19px}.timer{font-size:42px}.history-row{padding:10px}.week-grid{gap:3px}}
+
+/* Hollie Tracker: soft pink and cream theme */
+:root{--ink:#30343b;--muted:#858080;--paper:#faf6f2;--card:#fffefd;--sage:#fbe3eb;--sage-dark:#d94f7b;--peach:#fbe7e7;--blush:#fde9ed;--line:#eee3e3;--danger:#b84d64;--shadow:0 10px 30px rgba(110,65,79,.07)}
+body{background:radial-gradient(ellipse at top left,#fff0f4 0,transparent 44%),var(--paper)}
+.moon{background:#fbe2eb;color:#d94f7b;border-radius:50%}
+.brand h1{color:#d94f7b;font-size:25px;letter-spacing:-.7px}
+.brand p{font-size:12px}
+.pill{background:#fde8ef;color:#b83f68}
+.hero{background:linear-gradient(135deg,#fde5ed 0%,#fff7f5 58%,#fce9e8 100%)}
+.hero:after{color:rgba(217,79,123,.10)}
+.eyebrow{color:#b84d73}
+.primary{background:#e65d8b;color:white}
+.primary:hover{background:#d94f7b}
+.secondary{background:#fce8ef;color:#963d5d}
+.danger{background:#fde9ed;color:#b84d64}
+.field input,.field select{border-color:#eadfe2;background:#fffefd}
+.recommend{background:#fff0f4}
+.timeline-track{background:#f8e9ed;border-color:#f0dfe5}
+.timeline-segment{background:#f09ab6}
+.timeline-segment.active{background:#d94f7b;box-shadow:0 0 0 2px rgba(217,79,123,.15)}
+.dot{background:#f09ab6}.dot.active{background:#d94f7b}
+.day-col{background:#fff1f4}.day-bar{background:#f5dfe7}.day-fill{background:#e982a5}
+.mini-btn{background:#fce8ef;color:#963d5d}.mini-btn.delete{background:#fde9ed;color:#b84d64}
+.toast{background:#873e5a}
+.nav-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:-5px 0 14px}
+.nav-tab{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;background:#fce8ef;color:#8e3c59;border:1px solid transparent;border-radius:18px;padding:13px 8px;font-size:14px;font-weight:750}
+.nav-tab .nav-icon{font-size:22px;line-height:1}
+.nav-tab.active{background:#e65d8b;color:white;box-shadow:0 5px 14px rgba(217,79,123,.15)}
+#sleepPanel,#feedPanel,#nappyPanel{scroll-margin-top:14px}
+@media(max-width:380px){.nav-tab{font-size:12px;gap:5px;padding:12px 4px}.nav-tab .nav-icon{font-size:19px}.brand h1{font-size:22px}}
+
+/* Simple section navigation, daily overview, reminders and install controls */
+.section-hidden{display:none!important}
+.nav-tab{min-height:52px}
+.quick-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.quick-stat{background:#fffefd;border:1px solid var(--line);border-radius:17px;padding:12px 9px;text-align:center;min-width:0}
+.quick-stat .qs-icon{font-size:20px}.quick-stat .qs-value{font-size:18px;font-weight:800;line-height:1.25;margin-top:4px}.quick-stat .qs-label{font-size:10px;color:var(--muted);margin-top:3px}
+.quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.quick-action{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 5px;background:#fce8ef;color:#963d5d;border-radius:16px;font-size:12px}
+.quick-action span{font-size:23px}.quick-action:active{transform:scale(.98)}
+.install-btn{background:#fce8ef;color:#963d5d;padding:7px 10px;font-size:11px}
+.reminder-status{font-size:12px;color:var(--muted);margin:10px 0 0}
+@media(max-width:380px){.quick-stat{padding:10px 5px}.quick-stat .qs-value{font-size:16px}.quick-stat .qs-label{font-size:9px}}
+
+/* Premium visual redesign preview — presentation-only overrides */
+:root{
+  --ink:#342b32;--muted:#8a7b83;--paper:#fff8fa;--card:#fffefe;
+  --sage:#f9e5ed;--sage-dark:#c94475;--peach:#fff0ed;--blush:#fce8ef;
+  --line:#f0dfe6;--danger:#b94363;--shadow:0 12px 34px rgba(135,54,86,.075);
+  --radius:26px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(ellipse at 0% 0%,rgba(255,218,232,.72),transparent 36%),
+    radial-gradient(ellipse at 100% 12%,rgba(255,237,232,.62),transparent 30%),
+    var(--paper);
+  color:var(--ink);
+  letter-spacing:-.012em;
+}
+button,input,select{font-family:inherit}
+button{
+  border-radius:17px;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background-color .22s ease,opacity .22s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+button:active{transform:scale(.965)}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid rgba(217,79,123,.34);outline-offset:3px;
+}
+.wrap{max-width:760px;padding:22px 16px 42px}
+.top{margin-bottom:22px;align-items:center}
+.brand{gap:12px}
+.moon{
+  width:49px;height:49px;flex-basis:49px;border-radius:18px;
+  background:linear-gradient(145deg,#f9d8e5,#fff0f5);color:#c94475;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 18px rgba(201,68,117,.10);
+}
+.brand h1{font-size:24px;letter-spacing:-.9px;color:#b83e6d}
+.brand p{color:#9a8790;font-size:12px;letter-spacing:.01em}
+.pill{
+  background:#fff0f5;color:#b83e6d;border:1px solid #f5dce6;
+  padding:7px 11px;box-shadow:0 3px 10px rgba(135,54,86,.035)
+}
+.panel{
+  background:rgba(255,254,254,.91);backdrop-filter:blur(12px);
+  border:1px solid rgba(240,223,230,.95);border-radius:26px;
+  padding:20px;margin-bottom:15px;box-shadow:0 8px 28px rgba(115,67,84,.045);
+  animation:panel-arrive .48s cubic-bezier(.2,.75,.25,1) both;
+}
+.hero{
+  padding:27px 23px 24px;
+  background:linear-gradient(135deg,#fbdde8 0%,#fff3f5 48%,#fff0e9 100%);
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:0 16px 38px rgba(191,75,117,.11),inset 0 1px 0 rgba(255,255,255,.85);
+}
+.hero:after{content:"♡";font-size:112px;right:13px;top:-9px;color:rgba(190,62,109,.09);transform:rotate(-12deg)}
+.eyebrow{color:#b84d73;letter-spacing:1.7px;font-size:10px}
+.hero h2{font-size:clamp(26px,6vw,31px);letter-spacing:-1px;line-height:1.12;max-width:80%}
+.sub{color:#8b7b83}
+.timer{
+  color:#a93665;font-size:clamp(46px,12vw,66px);font-weight:760;
+  letter-spacing:-3px;margin:22px 0 21px;text-shadow:0 2px 0 rgba(255,255,255,.7);
+  font-variant-numeric:tabular-nums;
+}
+.primary{
+  background:linear-gradient(135deg,#e65d8b,#cf4777);color:#fff;
+  box-shadow:0 7px 16px rgba(205,65,115,.19);
+}
+.primary:hover{background:linear-gradient(135deg,#dc5483,#c43c6d);box-shadow:0 9px 20px rgba(205,65,115,.25)}
+.secondary,.mini-btn,.quick-action,.nav-tab{background:#fff0f5;color:#9e3e63}
+.danger{background:#ffedf0;color:#b94363}
+.actions{gap:11px}
+.actions button{min-height:49px}
+.stats{gap:11px}
+.stat,.quick-stat{
+  background:linear-gradient(155deg,#fffefe,#fff9fb);
+  border:1px solid #f0e2e7;border-radius:21px;
+  box-shadow:0 5px 16px rgba(115,67,84,.035);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.stat{padding:16px}
+.num,.quick-stat .qs-value{color:#45333d;font-variant-numeric:tabular-nums}
+.label,.quick-stat .qs-label{color:#96858d;letter-spacing:.015em}
+.quick-summary{gap:9px}
+.quick-stat{padding:14px 8px}
+.quick-stat .qs-icon{font-size:21px;filter:saturate(.82)}
+.quick-actions{gap:9px}
+.quick-action{
+  border:1px solid #f4dce6;border-radius:19px;padding:13px 6px;
+  box-shadow:0 5px 13px rgba(135,54,86,.035);
+}
+.quick-action span{font-size:24px;transition:transform .25s ease}
+.quick-action:active span{transform:scale(1.12) translateY(-1px)}
+.nav-tabs{gap:8px;margin-bottom:16px}
+.nav-tab{
+  border:1px solid #f1dce5;border-radius:18px;min-height:54px;
+  padding:13px 8px;box-shadow:0 4px 12px rgba(135,54,86,.025);
+  transition:background .25s ease,color .25s ease,transform .22s ease,box-shadow .25s ease;
+}
+.nav-tab.active{
+  background:linear-gradient(135deg,#e65d8b,#cf4777);color:#fff;
+  box-shadow:0 7px 18px rgba(205,65,115,.19);
+}
+.nav-tab .nav-icon{transition:transform .25s ease}
+.nav-tab.active .nav-icon{transform:translateY(-1px) scale(1.04)}
+.section-head h3{font-size:17px;letter-spacing:-.45px;color:#43333c}
+.tiny,.notice{color:#998991}
+.field label{color:#8d7883;font-size:11px;letter-spacing:.02em}
+.field input,.field select{
+  min-height:48px;border-radius:15px;border-color:#eedfe5;background:#fff;
+  box-shadow:inset 0 1px 2px rgba(80,45,60,.025);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.field input:focus,.field select:focus{border-color:#df7ca0;box-shadow:0 0 0 4px rgba(230,93,139,.10);outline:none}
+.recommend{background:linear-gradient(135deg,#fff0f5,#fff8f7);border:1px solid #f6e1e8;border-radius:20px}
+.history-list{gap:10px}
+.history-row{
+  background:linear-gradient(145deg,#fff,#fffbfc);border:1px solid #f0e3e8;
+  border-radius:18px;padding:13px;box-shadow:0 3px 12px rgba(115,67,84,.025);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.history-row:active{transform:scale(.992)}
+.history-row strong{color:#44323d;font-size:13px}
+.history-row small{color:#988791;line-height:1.5}
+.mini-btn{border:1px solid #f3dce6;border-radius:12px}
+.mini-btn.delete{background:#fff0f1;color:#b94363;border-color:#f7dfe3}
+.empty{background:rgba(255,248,250,.75);border:1px dashed #e9cbd7;border-radius:18px;padding:23px 15px;color:#9a8790}
+.feed-mode button{border-radius:15px;padding:12px 10px}
+.feed-mode button.active{box-shadow:0 6px 15px rgba(205,65,115,.16)}
+.breast-button{
+  border-radius:25px;min-height:145px;
+  box-shadow:0 9px 22px rgba(205,65,115,.13),inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .24s ease,box-shadow .24s ease,filter .24s ease;
+}
+.breast-button:first-child{background:linear-gradient(145deg,#e96a96,#d84e7e)}
+.breast-button.right-breast{background:linear-gradient(145deg,#f9d8e4,#f4bfd2);color:#923c5e}
+.breast-button:active{transform:scale(.975)}
+.breast-button.active{outline:3px solid #f9d9e5;box-shadow:0 0 0 2px #cf4777 inset,0 9px 24px rgba(205,65,115,.17)}
+.feed-timer{background:linear-gradient(145deg,#fff4f8,#fffafb);border:1px solid #f2d8e3;border-radius:22px}
+.feed-clock{color:#c94475;letter-spacing:-1.7px}
+.timeline-track{height:30px;border-radius:12px;background:#f9eaf0;border-color:#f0dfe6}
+.timeline-segment{border-radius:7px}
+.day-col{background:#fff4f7;border:1px solid #f5e6eb;border-radius:14px;padding:9px 3px}
+.day-bar{border-radius:9px;background:#f4e0e8}
+.day-fill{border-radius:9px 9px 0 0;background:linear-gradient(180deg,#ed8eae,#d95a88)}
+.install-btn{border-radius:12px;border:1px solid #f3dce6}
+.modal-backdrop{backdrop-filter:blur(5px);background:rgba(58,35,46,.38)}
+.modal{border:1px solid #f2dce5;border-radius:28px;box-shadow:0 24px 70px rgba(58,35,46,.2)}
+.toast{background:#71334f;border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 30px rgba(71,34,52,.22)}
+.footer{color:#a08d96;letter-spacing:.02em;padding-top:15px}
+@keyframes panel-arrive{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.panel:nth-of-type(2){animation-delay:.025s}
+.panel:nth-of-type(3){animation-delay:.05s}
+.panel:nth-of-type(4){animation-delay:.075s}
+@media(hover:hover){
+  .stat:hover,.quick-stat:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(115,67,84,.07)}
+  .history-row:hover{border-color:#e9c5d4;box-shadow:0 6px 17px rgba(115,67,84,.05)}
+  .quick-action:hover,.nav-tab:hover{transform:translateY(-1px)}
+}
+@media(max-width:380px){
+  .wrap{padding:15px 12px 34px}
+  .top{gap:8px}.brand{gap:9px}.moon{width:43px;height:43px;flex-basis:43px}
+  .brand h1{font-size:21px}.hero{padding:22px 18px}
+  .hero h2{max-width:85%}.panel{padding:16px;border-radius:22px}
+  .quick-stat{padding:11px 4px}.quick-action{border-radius:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+</style>
+</head>
+<body>
+<div id="authView" class="panel auth">
+  <div class="brand"><div class="moon">♡</div><div><h1>Hollie Tracker</h1><p>Sleep · Feeds · Nappies</p></div></div>
+  <p class="sub" style="margin:18px 0">Sign in to keep your baby's sleep log synced between both phones.</p>
+  <form id="loginForm"><div class="field" style="margin-bottom:12px"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"></div><div class="field" style="margin-bottom:14px"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Your password"></div><button class="primary" style="width:100%" type="submit">Sign in</button><p id="authError" class="error" role="alert"></p></form>
+  <p class="notice">Sign-in accounts are managed privately in Firebase Authentication.</p>
+</div>
+<main id="appView" class="wrap hidden">
+<header class="top"><div class="brand"><div class="moon">♡</div><div><h1>Hollie Tracker</h1><p>Sleep · Feeds · Nappies · All in one place</p></div></div><div class="top-right"><span id="syncStatus" class="pill">Connecting…</span><div style="display:flex;gap:5px;align-items:center"><button id="installApp" class="install-btn hidden" type="button">Install app</button><button id="signOut" class="icon-button">Sign out</button></div></div></header>
+<div class="quick-summary" aria-label="Today at a glance"><div class="quick-stat"><div class="qs-icon">🌙</div><div id="summarySleep" class="qs-value">0m</div><div class="qs-label">Sleep today</div></div><div class="quick-stat"><div class="qs-icon">🍼</div><div id="summaryFeeds" class="qs-value">0</div><div class="qs-label">Feeds today</div></div><div class="quick-stat"><div class="qs-icon">🧷</div><div id="summaryNappies" class="qs-value">0</div><div class="qs-label">Nappies today</div></div></div>
+<div class="quick-actions"><button class="quick-action" type="button" data-section="sleep"><span>🌙</span>Sleep</button><button class="quick-action" type="button" data-section="feed"><span>🍼</span>Log feed</button><button class="quick-action" type="button" data-section="nappy"><span>🧷</span>Log nappy</button></div>
+<nav class="nav-tabs" aria-label="Tracker sections"><button class="nav-tab active" type="button" data-section="sleep"><span class="nav-icon">☾</span>Sleep</button><button class="nav-tab" type="button" data-section="feed"><span class="nav-icon">🍼</span>Feeds</button><button class="nav-tab" type="button" data-section="nappy"><span class="nav-icon">🧷</span>Nappies</button></nav>
+<section id="sleepPanel" class="panel hero"><p class="eyebrow" id="currentLabel">Sleep tracker</p><h2 id="heroTitle">Ready when you are</h2><p class="sub" id="heroSub">Start a sleep session when she settles.</p><div class="timer" id="timer">00:00:00</div><div class="actions"><button id="startSleep" class="primary">▶ Start sleep</button><button id="stopSleep" class="danger hidden">■ Stop sleep</button></div><p class="notice">The timer keeps its start time if you close the page. Open it again to see the updated duration.</p></section>
+<div class="stats sleep-stats"><div class="stat"><div class="num" id="todaySleep">0h 0m</div><div class="label">Sleep logged today</div></div><div class="stat"><div class="num" id="todayNaps">0</div><div class="label">Sleep sessions today</div></div><div class="stat"><div class="num" id="lastSleep">—</div><div class="label">Last sleep duration</div></div></div>
+<section id="feedPanel" class="panel">
+  <div class="section-head"><h3>🍼 Feeding tracker</h3><span class="tiny">Shared with both phones</span></div>
+  <div class="feed-mode" role="group" aria-label="Feed type">
+    <button type="button" id="nursingMode" class="active">🤱 Breastfeeding</button>
+    <button type="button" id="bottleMode">🍼 Bottle feed</button>
+  </div>
+  <div id="nursingView">
+    <p class="sub">Tap the side Hollie starts on. Switch sides during the feed, then finish to save both durations.</p>
+    <div class="breast-buttons">
+      <button type="button" id="startLeft" class="breast-button"><span style="font-size:30px">◀</span><strong>LEFT</strong><span>Start / switch</span></button>
+      <button type="button" id="startRight" class="breast-button right-breast"><span style="font-size:30px">▶</span><strong>RIGHT</strong><span>Start / switch</span></button>
+    </div>
+    <div id="nursingTimer" class="feed-timer">
+      <div id="nursingStatus" class="tiny">No breastfeeding session running</div>
+      <div id="nursingClock" class="feed-clock">00:00</div>
+      <div id="nursingDetail" class="feed-subtime">Choose LEFT or RIGHT to start</div>
+      <div class="feed-controls" style="margin-top:15px">
+        <button type="button" id="finishNursing" class="primary" disabled>Finish &amp; save feed</button>
+        <button type="button" id="cancelNursing" class="secondary" disabled>Cancel</button>
+      </div>
+    </div>
+    <div class="field" style="margin-top:12px"><label for="nursingNote">Note (optional)</label><input id="nursingNote" maxlength="180" placeholder="Anything to remember"></div>
+  </div>
+  <div id="bottleView" class="hidden">
+    <form id="bottleForm"><div class="form-grid">
+      <div class="field"><label for="bottleType">Bottle type</label><select id="bottleType" required><option value="Expressed milk">Expressed milk</option><option value="Formula">Formula</option></select></div>
+      <div class="field"><label for="bottleTime">Time</label><input id="bottleTime" type="datetime-local" required></div>
+      <div class="field"><label for="bottleAmount">Amount (ml)</label><input id="bottleAmount" type="number" min="0" max="2000" step="5" placeholder="e.g. 120" required></div>
+      <div class="field"><label for="bottleDuration">Duration (minutes, optional)</label><input id="bottleDuration" type="number" min="0" max="240" step="1" placeholder="e.g. 15"></div>
+      <div class="field full"><label for="bottleNote">Note (optional)</label><input id="bottleNote" maxlength="180" placeholder="Anything to remember"></div>
+      <div class="field full"><button class="primary" type="submit">Save bottle feed</button></div>
+    </div></form>
+  </div>
+</section>
+<section id="nappyPanel" class="panel">
+  <div class="section-head"><h3>🩲 Log a nappy</h3><span class="tiny">Shared with both phones</span></div>
+  <form id="nappyForm">
+    <div class="form-grid">
+      <div class="field"><label for="nappyType">Nappy type</label><select id="nappyType" required><option value="Wet">Wet</option><option value="Dirty">Dirty</option><option value="Wet and dirty">Wet and dirty</option></select></div>
+      <div class="field"><label for="nappyTime">Time</label><input id="nappyTime" type="datetime-local" required></div>
+      <div class="field full"><label for="nappyNote">Note (optional)</label><input id="nappyNote" maxlength="180" placeholder="Anything to remember"></div>
+      <div class="field full"><button class="primary" type="submit">Save nappy</button></div>
+    </div>
+  </form>
+</section>
+<section class="panel">
+  <div class="section-head"><h3>Today's family timeline</h3><span id="activityCount" class="tiny">0 entries</span></div>
+  <div id="activityList" class="history-list"><div class="empty">Feeds, nappies and sleep will appear here.</div></div>
+  <p class="notice">This timeline combines today's saved sleep sessions, feeds and nappy changes.</p>
+</section>
+<section id="sleepTimelinePanel" class="panel sleep-only"><div class="section-head"><h3>Today at a glance</h3><span class="pill">24 hours</span></div><div id="timeline"><div class="empty">Your sleep timeline will appear here.</div></div><div class="timeline-legend"><span><i class="dot"></i>Sleep logged</span><span><i class="dot active"></i>In progress</span></div></section>
+<section id="nextSleepPanel" class="panel sleep-only"><div class="section-head"><h3>Next sleep suggestion</h3><span class="pill">Flexible guide</span></div><div class="recommend"><h4 id="nextTitle">Log a sleep to get a suggestion</h4><p id="nextText">Once a sleep ends, we'll estimate a possible next sleep window.</p></div><p class="notice">This is a planning aid, not medical advice. Babies' sleep cues and needs vary; follow her cues rather than forcing a schedule.</p></section>
+<section id="routinePanel" class="panel sleep-only"><div class="section-head"><h3>Our preferred routine</h3><span class="tiny">Shared between your phones</span></div><form id="settingsForm"><div class="form-grid"><div class="field"><label for="wakeTime">Preferred morning start</label><input id="wakeTime" type="time" value="07:00" required></div><div class="field"><label for="bedTime">Preferred bedtime</label><input id="bedTime" type="time" value="19:30" required></div><div class="field"><label for="wakeMin">Wake window — minimum (minutes)</label><input id="wakeMin" type="number" min="20" max="240" step="5" value="45" required></div><div class="field"><label for="wakeMax">Wake window — maximum (minutes)</label><input id="wakeMax" type="number" min="20" max="300" step="5" value="75" required></div><div class="field full"><button id="saveSettings" class="secondary" type="submit">Save preferred routine</button></div></div></form><p class="notice">Wake-window values are editable starting points, not a prescription. For a very young baby, use sleepy cues and your health visitor's advice as the priority.</p></section>
+<section id="remindersPanel" class="panel"><div class="section-head"><h3>⏰ Custom reminders</h3><span class="tiny">Shared settings</span></div><form id="reminderForm"><div class="form-grid"><div class="field"><label for="reminderEnabled">Feed reminder</label><select id="reminderEnabled"><option value="off">Off</option><option value="on">On</option></select></div><div class="field"><label for="reminderHours">Remind me every</label><select id="reminderHours"><option value="2">2 hours</option><option value="2.5">2½ hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option></select></div><div class="field full"><label for="reminderMessage">Reminder message</label><input id="reminderMessage" maxlength="100" value="Time to check whether Hollie needs a feed" placeholder="Your reminder message"></div><div class="field full"><button class="primary" type="submit">Save reminders</button></div></div></form><p id="reminderStatus" class="reminder-status">Reminders are off. Notifications work while this tracker is open; browser support and permission are required.</p><p class="notice">For safety and reliability, reminders are gentle prompts, not feeding instructions. Browser reminders may not fire when the app is closed or the phone restricts background activity.</p></section>
+<section id="weekPanel" class="panel sleep-only"><div class="section-head"><h3>This week</h3><span id="weekTotal" class="tiny">0 total</span></div><div id="weekGrid" class="week-grid"></div><p class="notice">Daily totals include the part of a sleep session that falls on that calendar day, including sessions crossing midnight.</p></section>
+<section id="sleepHistoryPanel" class="panel sleep-only"><div class="section-head"><h3>Today's sleep log</h3><span id="historyCount" class="tiny">0 entries</span></div><div id="historyList" class="history-list"><div class="empty">No sleep sessions logged yet.</div></div><p class="notice">Tap Edit to correct a start or end time. Changes sync to both phones.</p></section>
+<div class="footer">Hollie Tracker · Made with love for your family</div>
+</main>
+<div id="editBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div class="modal"><h3 id="editTitle">Edit sleep session</h3><form id="editForm"><div class="form-grid"><div class="field"><label for="editStartDate">Start date</label><input id="editStartDate" type="date" required></div><div class="field"><label for="editStartTime">Start time</label><input id="editStartTime" type="time" required></div><div class="field"><label for="editEndDate">End date</label><input id="editEndDate" type="date"></div><div class="field"><label for="editEndTime">End time</label><input id="editEndTime" type="time"></div></div><p class="notice">Leave both end fields blank if the sleep is still in progress.</p><div class="modal-actions"><button type="button" id="cancelEdit" class="secondary">Cancel</button><button type="submit" class="primary">Save changes</button></div><p id="editError" class="error" role="alert"></p></form></div></div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, collection, addDoc, setDoc, onSnapshot, query, orderBy, limit, serverTimestamp, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { firebaseConfig, FAMILY_SPACE_ID } from './firebase-config.js';
+const $=id=>document.getElementById(id),authView=$('authView'),appView=$('appView');
+let auth,db,activeUser=null,unsubSettings=null,unsubSessions=null,unsubFeeds=null,unsubNappies=null,feeds=[],nappies=[],settings={wakeTime:'07:00',bedTime:'19:30',wakeMin:45,wakeMax:75},sessions=[],currentSleep=null,tickHandle=null,editingId=null,toastHandle=null;
+const sessionsRef=()=>collection(db,'families',FAMILY_SPACE_ID,'sleepSessions'),feedsRef=()=>collection(db,'families',FAMILY_SPACE_ID,'feeds'),nappiesRef=()=>collection(db,'families',FAMILY_SPACE_ID,'nappies'),settingsRef=()=>doc(db,'families',FAMILY_SPACE_ID,'settings','routine');
+function showError(m){$('authError').textContent=m}
+function notify(m){const t=$('toast');t.textContent=m;t.classList.remove('hidden');if(toastHandle)clearTimeout(toastHandle);toastHandle=setTimeout(()=>t.classList.add('hidden'),2600)}
+function fmtDuration(ms){const n=Math.max(0,Math.floor(ms/1000)),h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=n%60;return`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function shortDuration(ms){const n=Math.max(0,Math.round(ms/60000)),h=Math.floor(n/60),m=n%60;return h?`${h}h ${m}m`:`${m}m`}
+function localDateKey(v){const d=new Date(v);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function clock(v){return new Date(v).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
+function dateTime(v){return new Date(v).toLocaleString([],{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+function startOfDay(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()}
+function endOfDay(d){return startOfDay(d)+86400000}
+function effectiveEnd(s){return s.endAt||Date.now()}
+function visibleSessions(){return sessions.filter(s=>!s.deleted&&Number.isFinite(Number(s.startAt)))}
+function overlap(s,start,end){return Math.max(0,Math.min(effectiveEnd(s),end)-Math.max(s.startAt,start))}
+function sessionsForDay(d){const a=startOfDay(d),b=endOfDay(d);return visibleSessions().filter(s=>s.startAt<b&&effectiveEnd(s)>a)}
+function dayTotal(d){const a=startOfDay(d),b=endOfDay(d);return visibleSessions().reduce((sum,s)=>sum+overlap(s,a,b),0)}
+function todaySessions(){const a=startOfDay(new Date()),b=endOfDay(new Date());return visibleSessions().filter(s=>s.startAt<b&&effectiveEnd(s)>a).sort((x,y)=>y.startAt-x.startAt)}
+function completedSessions(){return visibleSessions().filter(s=>s.endAt).sort((a,b)=>b.endAt-a.endAt)}
+function render(){const all=visibleSessions(),active=all.filter(s=>!s.endAt).sort((a,b)=>b.startAt-a.startAt)[0]||null;currentSleep=active;$('startSleep').classList.toggle('hidden',!!active);$('stopSleep').classList.toggle('hidden',!active);$('currentLabel').textContent=active?'Sleep in progress':'Sleep tracker';$('heroTitle').textContent=active?'She is sleeping':'Ready when you are';$('heroSub').textContent=active?`Started ${dateTime(active.startAt)}. The timer updates live.`:'Start a sleep session when she settles.';$('timer').textContent=active?fmtDuration(Date.now()-active.startAt):'00:00:00';$('todaySleep').textContent=shortDuration(dayTotal(new Date()));$('todayNaps').textContent=todaySessions().length;$('summarySleep').textContent=shortDuration(dayTotal(new Date()));$('summaryFeeds').textContent=feeds.filter(x=>!x.deleted&&Number(x.timeAt)>=startOfDay(new Date())&&Number(x.timeAt)<endOfDay(new Date())).length;$('summaryNappies').textContent=nappies.filter(x=>!x.deleted&&Number(x.timeAt)>=startOfDay(new Date())&&Number(x.timeAt)<endOfDay(new Date())).length;const done=completedSessions();$('lastSleep').textContent=done.length?shortDuration(done[0].endAt-done[0].startAt):'—';renderRecommendation(active,done[0]);renderTimeline();renderWeek();renderHistory();renderActivity()}
+function renderRecommendation(active,last){if(active){$('nextTitle').textContent='Let her sleep, and follow her cues';$('nextText').textContent='When she wakes, stop the timer. The next suggestion will be based on her wake time and your chosen wake window.';return}if(!last){$('nextTitle').textContent='Log her first sleep';$('nextText').textContent='After you finish a sleep session, we can estimate a possible next window.';return}const min=Number(settings.wakeMin)||45,max=Number(settings.wakeMax)||75,a=last.endAt+min*60000,b=last.endAt+max*60000;$('nextTitle').textContent=`Possible next sleep: ${clock(a)}–${clock(b)}`;const now=Date.now();let m=`Based on her last recorded wake time (${clock(last.endAt)}) and your ${min}–${max} minute preference.`;if(now<a)m+=` That's about ${shortDuration(a-now)} until the suggested window begins.`;else if(now<=b)m+=' You are within the suggested window; watch for her sleepy cues.';else m+=' This window has passed; follow her cues and current circumstances rather than trying to catch up to the clock.';$('nextText').textContent=m}
+function renderTimeline(){const el=$('timeline'),a=startOfDay(new Date()),b=a+86400000,parts=sessionsForDay(new Date()).map(s=>({left:Math.max(a,s.startAt),right:Math.min(b,effectiveEnd(s)),active:!s.endAt})).filter(s=>s.right>s.left);el.innerHTML=`<div class="timeline-scale"><span>12 am</span><span>6 am</span><span>12 pm</span><span>6 pm</span><span>12 am</span></div><div class="timeline-track" aria-label="Today's sleep timeline">${parts.map(p=>`<span class="timeline-segment ${p.active?'active':''}" style="left:${(p.left-a)/86400000*100}%;width:${Math.max((p.right-p.left)/864000,.3)}%" title="${p.active?'Sleep in progress':'Sleep logged'}"></span>`).join('')}</div>`}
+function renderWeek(){const now=new Date(),days=[];for(let i=6;i>=0;i--)days.push(new Date(now.getFullYear(),now.getMonth(),now.getDate()-i));const totals=days.map(dayTotal),max=Math.max(8*3600000,...totals);$('weekGrid').innerHTML=days.map((d,i)=>{const mins=Math.round(totals[i]/60000),h=Math.floor(mins/60),m=mins%60,label=!mins?'—':h?`${h}h${m?` ${m}`:''}`:`${m}m`,pct=Math.min(100,totals[i]/max*100);return`<div class="day-col"><div class="day-name">${d.toLocaleDateString([],{weekday:'short'})}</div><div class="day-value">${label}</div><div class="day-bar"><div class="day-fill" style="height:${pct}%"></div></div></div>`}).join('');$('weekTotal').textContent=`${shortDuration(totals.reduce((a,b)=>a+b,0))} total`}
+function renderHistory(){const list=$('historyList'),today=todaySessions();$('historyCount').textContent=`${today.length} ${today.length===1?'entry':'entries'}`;if(!today.length){list.innerHTML='<div class="empty">No sleep sessions logged today.</div>';return}list.innerHTML=today.map(s=>`<div class="history-row"><div class="meta"><strong>${clock(s.startAt)} – ${s.endAt?clock(s.endAt):'now'}</strong><small>${s.endAt?'Sleep completed':'Currently sleeping'} · ${dateTime(s.startAt)}${s.startAt<startOfDay(new Date())?' · started yesterday':''}</small></div><div class="right"><strong>${s.endAt?shortDuration(s.endAt-s.startAt):'In progress'}</strong><div class="row-actions"><button class="mini-btn" data-edit="${s.id}">Edit</button><button class="mini-btn delete" data-delete="${s.id}">Delete</button></div></div></div>`).join('');list.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEdit(b.dataset.edit)));list.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',async()=>{if(!confirm('Delete this sleep entry for both phones?'))return;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',b.dataset.delete),{deleted:true,deletedBy:activeUser.uid,deletedAt:serverTimestamp()});notify('Sleep entry deleted for both phones.')}catch(e){alert('Could not delete this entry. Check your connection.')}}))}
+function renderActivity(){
+  const todayStart=startOfDay(new Date()),todayEnd=endOfDay(new Date());
+  const items=[];
+  visibleSessions().forEach(s=>{const end=effectiveEnd(s);if(s.startAt<todayEnd&&end>todayStart)items.push({kind:'Sleep',time:Math.max(s.startAt,todayStart),end:s.endAt,label:s.endAt?'Sleep session':'Sleep in progress',detail:`${clock(s.startAt)}${s.endAt?' – '+clock(s.endAt):' – now'} · ${s.endAt?shortDuration(s.endAt-s.startAt):'ongoing'}`,id:s.id,collection:'sleepSessions'});});
+  feeds.filter(x=>Number.isFinite(Number(x.timeAt))&&x.timeAt>=todayStart&&x.timeAt<todayEnd&&!x.deleted).forEach(x=>items.push({kind:'Feed',time:x.timeAt,label:x.feedType||'Feed',detail:[x.amountMl?`${x.amountMl} ml`:null,x.durationMinutes?`${x.durationMinutes} min`:null,x.leftDurationMinutes!=null||x.rightDurationMinutes!=null?`Left ${x.leftDurationMinutes||0} min · Right ${x.rightDurationMinutes||0} min`:x.side?`${x.side} side`:null,x.note||null].filter(Boolean).join(' · ')||'Feed logged',id:x.id,collection:'feeds'}));
+  nappies.filter(x=>Number.isFinite(Number(x.timeAt))&&x.timeAt>=todayStart&&x.timeAt<todayEnd&&!x.deleted).forEach(x=>items.push({kind:'Nappy',time:x.timeAt,label:`${x.nappyType||'Nappy'} nappy`,detail:x.note||'Nappy change logged',id:x.id,collection:'nappies'}));
+  items.sort((a,b)=>b.time-a.time);
+  $('activityCount').textContent=`${items.length} ${items.length===1?'entry':'entries'}`;$('summaryFeeds').textContent=feeds.filter(x=>!x.deleted&&Number(x.timeAt)>=todayStart&&Number(x.timeAt)<todayEnd).length;$('summaryNappies').textContent=nappies.filter(x=>!x.deleted&&Number(x.timeAt)>=todayStart&&Number(x.timeAt)<todayEnd).length;
+  if(!items.length){$('activityList').innerHTML='<div class="empty">No feeds, nappies or sleep entries today yet.</div>';return;}
+  $('activityList').innerHTML=items.map(x=>`<div class="history-row"><div class="meta"><strong>${x.kind==='Sleep'?'🌙':x.kind==='Feed'?'🍼':'🧷'} ${escapeHtml(x.label)}</strong><small>${clock(x.time)} · ${escapeHtml(x.detail)}</small></div><div class="right"><button class="mini-btn delete" data-activity-delete="${x.collection}|${x.id}">Delete</button></div></div>`).join('');
+  $('activityList').querySelectorAll('[data-activity-delete]').forEach(b=>b.addEventListener('click',async()=>{const [col,id]=b.dataset.activityDelete.split('|');if(!confirm(`Delete this ${col==='feeds'?'feed':col==='nappies'?'nappy':'sleep'} entry for both phones?`))return;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,col,id),{deleted:true,deletedBy:activeUser.uid,deletedAt:serverTimestamp()});notify('Entry deleted and synced.')}catch(e){alert('Could not delete this entry. Check your connection.')}}));
+}
+function localDateTimeInput(ms=Date.now()){const d=new Date(ms);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeText(value){return String(value||'').trim()}
+function dateInput(ms){const d=new Date(ms);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function timeInput(ms){const d=new Date(ms);return`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function combine(d,t){return new Date(`${d}T${t}:00`).getTime()}
+function openEdit(id){const s=visibleSessions().find(x=>x.id===id);if(!s)return;editingId=id;$('editStartDate').value=dateInput(s.startAt);$('editStartTime').value=timeInput(s.startAt);$('editEndDate').value=s.endAt?dateInput(s.endAt):'';$('editEndTime').value=s.endAt?timeInput(s.endAt):'';$('editError').textContent='';$('editBackdrop').classList.remove('hidden')}
+function closeEdit(){$('editBackdrop').classList.add('hidden');editingId=null}
+$('cancelEdit').addEventListener('click',closeEdit);$('editBackdrop').addEventListener('click',e=>{if(e.target===$('editBackdrop'))closeEdit()});
+$('editForm').addEventListener('submit',async e=>{e.preventDefault();if(!editingId)return;const start=combine($('editStartDate').value,$('editStartTime').value),hasEnd=!!$('editEndDate').value||!!$('editEndTime').value;if(!Number.isFinite(start)){$('editError').textContent='Please enter a valid start date and time.';return}let endAt=null;if(hasEnd){if(!$('editEndDate').value||!$('editEndTime').value){$('editError').textContent='Enter both end date and end time, or leave both blank.';return}endAt=combine($('editEndDate').value,$('editEndTime').value);if(!Number.isFinite(endAt)||endAt<=start){$('editError').textContent='The end time must be after the start time.';return}if(endAt>Date.now()+60000){$('editError').textContent='The end time cannot be in the future.';return}}try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',editingId),{startAt:start,endAt,editedBy:activeUser.uid,editedAt:serverTimestamp(),endedBy:endAt?activeUser.uid:null});closeEdit();notify('Sleep session updated and synced.')}catch(err){$('editError').textContent='Could not save changes. Check your connection and try again.'}});
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();showError('');try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){showError('Sign-in failed. Check the email and password, and make sure the account exists in Firebase.')}});
+$('signOut').addEventListener('click',()=>signOut(auth));
+$('startSleep').addEventListener('click',async()=>{if(!activeUser)return;if(visibleSessions().some(s=>!s.endAt)){notify('A sleep session is already in progress.');return}$('startSleep').disabled=true;try{await addDoc(sessionsRef(),{startAt:Date.now(),endAt:null,createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false});notify('Sleep timer started.')}catch(e){alert('Could not start the timer. Check your internet connection.')}finally{$('startSleep').disabled=false}});
+$('stopSleep').addEventListener('click',async()=>{if(!currentSleep)return;$('stopSleep').disabled=true;try{await updateDoc(doc(db,'families',FAMILY_SPACE_ID,'sleepSessions',currentSleep.id),{endAt:Date.now(),endedBy:activeUser.uid});notify('Sleep session saved.')}catch(e){alert('Could not stop the timer. Check your internet connection.')}finally{$('stopSleep').disabled=false}});
+$('settingsForm').addEventListener('submit',async e=>{e.preventDefault();const min=Number($('wakeMin').value),max=Number($('wakeMax').value);if(min>max){alert('Minimum wake window must be less than or equal to maximum.');return}try{await setDoc(settingsRef(),{wakeTime:$('wakeTime').value,bedTime:$('bedTime').value,wakeMin:min,wakeMax:max,updatedBy:activeUser.uid,updatedAt:serverTimestamp()},{merge:true});notify('Routine saved and synced.')}catch(e){alert('Could not save the routine. Check your connection.')}});
+$('bottleTime').value=localDateTimeInput();$('nappyTime').value=localDateTimeInput();
+function showSection(section){const sleep=section==='sleep';$('sleepPanel').classList.toggle('section-hidden',!sleep);document.querySelector('.sleep-stats').classList.toggle('section-hidden',!sleep);document.querySelectorAll('.sleep-only').forEach(el=>el.classList.toggle('section-hidden',!sleep));$('feedPanel').classList.toggle('section-hidden',section!=='feed');$('nappyPanel').classList.toggle('section-hidden',section!=='nappy');document.querySelectorAll('.nav-tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.section===section));if(section!=='sleep')document.getElementById(section==='feed'?'feedPanel':'nappyPanel').scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-section]').forEach(button=>button.addEventListener('click',()=>showSection(button.dataset.section)));
+let nursingSession=null,nursingTick=null;
+const NURSING_STORAGE_KEY='hollieTrackerActiveNursingV1';
+function loadNursingSession(){try{const raw=localStorage.getItem(NURSING_STORAGE_KEY);if(raw)nursingSession=JSON.parse(raw)}catch(e){nursingSession=null}renderNursingTimer()}
+function persistNursingSession(){try{if(nursingSession)localStorage.setItem(NURSING_STORAGE_KEY,JSON.stringify(nursingSession));else localStorage.removeItem(NURSING_STORAGE_KEY)}catch(e){}}
+function elapsedSide(side){if(!nursingSession)return 0;return (Number(nursingSession.durations?.[side])||0)+(nursingSession.currentSide===side&&nursingSession.sideStartedAt?Math.max(0,Date.now()-nursingSession.sideStartedAt):0)}
+function fmtClock(ms){const total=Math.floor(ms/1000),m=Math.floor(total/60),sec=total%60;return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`}
+function renderNursingTimer(){const active=!!nursingSession;$('finishNursing').disabled=!active;$('cancelNursing').disabled=!active;$('nursingStatus').textContent=active?`Breastfeeding in progress · ${nursingSession.currentSide} breast`:'No breastfeeding session running';$('nursingClock').textContent=active?fmtClock(elapsedSide(nursingSession.currentSide)):'00:00';$('nursingDetail').textContent=active?`Left ${fmtClock(elapsedSide('Left'))} · Right ${fmtClock(elapsedSide('Right'))} · Total ${fmtClock(elapsedSide('Left')+elapsedSide('Right'))}`:'Choose LEFT or RIGHT to start';$('startLeft').classList.toggle('active',active&&nursingSession.currentSide==='Left');$('startRight').classList.toggle('active',active&&nursingSession.currentSide==='Right');$('startLeft').querySelector('span:last-child').textContent=active&&nursingSession.currentSide==='Left'?'Currently timing':'Start / switch';$('startRight').querySelector('span:last-child').textContent=active&&nursingSession.currentSide==='Right'?'Currently timing':'Start / switch'}
+function startOrSwitchBreast(side){const now=Date.now();if(!nursingSession)nursingSession={startedAt:now,currentSide:side,sideStartedAt:now,durations:{Left:0,Right:0}};else if(nursingSession.currentSide!==side){nursingSession.durations[nursingSession.currentSide]=(Number(nursingSession.durations[nursingSession.currentSide])||0)+Math.max(0,now-nursingSession.sideStartedAt);nursingSession.currentSide=side;nursingSession.sideStartedAt=now}persistNursingSession();renderNursingTimer()}
+$('nursingMode').addEventListener('click',()=>{$('nursingView').classList.remove('hidden');$('bottleView').classList.add('hidden');$('nursingMode').classList.add('active');$('bottleMode').classList.remove('active')});
+$('bottleMode').addEventListener('click',()=>{$('bottleView').classList.remove('hidden');$('nursingView').classList.add('hidden');$('bottleMode').classList.add('active');$('nursingMode').classList.remove('active')});
+$('startLeft').addEventListener('click',()=>startOrSwitchBreast('Left'));
+$('startRight').addEventListener('click',()=>startOrSwitchBreast('Right'));
+$('cancelNursing').addEventListener('click',()=>{if(!nursingSession||!confirm('Cancel this breastfeeding session without saving it?'))return;nursingSession=null;persistNursingSession();renderNursingTimer();notify('Breastfeeding session cancelled.')});
+$('finishNursing').addEventListener('click',async()=>{if(!activeUser||!nursingSession)return;const now=Date.now();nursingSession.durations[nursingSession.currentSide]=(Number(nursingSession.durations[nursingSession.currentSide])||0)+Math.max(0,now-nursingSession.sideStartedAt);const leftMs=nursingSession.durations.Left||0,rightMs=nursingSession.durations.Right||0,totalMs=leftMs+rightMs;if(totalMs<1000){alert('Please time at least one second before saving.');return}const record={feedType:'Breastfeeding',timeAt:nursingSession.startedAt,endedAt:now,amountMl:null,durationMinutes:Math.max(1,Math.round(totalMs/60000)),leftDurationMinutes:Math.round(leftMs/60000*10)/10,rightDurationMinutes:Math.round(rightMs/60000*10)/10,leftDurationMs:leftMs,rightDurationMs:rightMs,side:leftMs&&rightMs?'Both':leftMs?'Left':'Right',note:escapeText($('nursingNote').value),createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false};try{await addDoc(feedsRef(),record);nursingSession=null;persistNursingSession();$('nursingNote').value='';renderNursingTimer();notify('Breastfeeding feed saved and synced.')}catch(err){alert('Could not save the feed. The timer is kept so you can try again.')}});
+$('bottleTime').value=localDateTimeInput();
+$('bottleForm').addEventListener('submit',async e=>{e.preventDefault();if(!activeUser)return;const duration=$('bottleDuration').value;const record={feedType:$('bottleType').value,timeAt:new Date($('bottleTime').value).getTime(),amountMl:Number($('bottleAmount').value),durationMinutes:duration===''?null:Number(duration),side:null,note:escapeText($('bottleNote').value),createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false};if(!Number.isFinite(record.timeAt)){alert('Please enter a valid feed time.');return}try{await addDoc(feedsRef(),record);$('bottleAmount').value='';$('bottleDuration').value='';$('bottleNote').value='';$('bottleTime').value=localDateTimeInput();notify('Bottle feed saved and synced.')}catch(err){alert('Could not save the feed. Check your connection.')}});
+loadNursingSession();nursingTick=setInterval(renderNursingTimer,1000);
+$('nappyForm').addEventListener('submit',async e=>{e.preventDefault();if(!activeUser)return;const record={nappyType:$('nappyType').value,timeAt:new Date($('nappyTime').value).getTime(),note:escapeText($('nappyNote').value),createdBy:activeUser.uid,createdAt:serverTimestamp(),deleted:false};if(!Number.isFinite(record.timeAt)){alert('Please enter a valid nappy time.');return}try{await addDoc(nappiesRef(),record);$('nappyNote').value='';$('nappyTime').value=localDateTimeInput();notify('Nappy change saved and synced.')}catch(err){alert('Could not save the nappy change. Check your connection.')}});
+let reminderTimer=null,lastReminderAt=0,installPrompt=null;
+function updateReminderStatus(){const enabled=settings.reminderEnabled==='on',hours=Number(settings.reminderHours)||3;$('reminderEnabled').value=enabled?'on':'off';$('reminderHours').value=String(hours);$('reminderMessage').value=settings.reminderMessage||'Time to check whether Hollie needs a feed';$('reminderStatus').textContent=enabled?`Feed reminder is on: every ${hours} hour${hours===1?'':'s'} while the tracker is open. Notifications: ${('Notification' in window)?Notification.permission:'not supported'}.`:'Feed reminders are off. Turn them on and allow notifications if prompted.'}
+async function requestNotifications(){if(!('Notification' in window)){notify('Notifications are not supported by this browser.');return false}if(Notification.permission==='granted')return true;const permission=await Notification.requestPermission();return permission==='granted'}
+$('reminderForm').addEventListener('submit',async e=>{e.preventDefault();if(!activeUser)return;const enabled=$('reminderEnabled').value==='on';if(enabled){const ok=await requestNotifications();if(!ok){notify('Allow notifications in your browser settings to use reminders.');}}const reminderSettings={reminderEnabled:enabled?'on':'off',reminderHours:Number($('reminderHours').value),reminderMessage:escapeText($('reminderMessage').value)||'Time to check whether Hollie needs a feed',updatedBy:activeUser.uid,updatedAt:serverTimestamp()};try{await setDoc(settingsRef(),reminderSettings,{merge:true});settings={...settings,...reminderSettings};updateReminderStatus();notify('Reminder settings saved and synced.')}catch(err){alert('Could not save reminders. Check your connection.')}});
+function checkReminder(){if(!activeUser||settings.reminderEnabled!=='on')return;const interval=(Number(settings.reminderHours)||3)*3600000;if(!lastReminderAt)lastReminderAt=Date.now();if(Date.now()-lastReminderAt>=interval){lastReminderAt=Date.now();const msg=settings.reminderMessage||'Time to check whether Hollie needs a feed';if('Notification' in window&&Notification.permission==='granted'){try{new Notification('Hollie Tracker',{body:msg,icon:'./icon-192.png'})}catch(e){notify(msg)}}else notify(msg)}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installApp').classList.remove('hidden')});$('installApp').addEventListener('click',async()=>{if(!installPrompt){notify('Use your browser menu and choose Add to Home screen.');return}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installApp').classList.add('hidden')});window.addEventListener('appinstalled',()=>{notify('Hollie Tracker installed.');$('installApp').classList.add('hidden')});if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+try {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'PASTE_API_KEY_HERE') {
+    throw new Error('Firebase configuration is missing or incomplete in firebase-config.js.');
+  }
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  onAuthStateChanged(auth, user => {
+    activeUser = user;
+    authView.classList.toggle('hidden', !!user);
+    appView.classList.toggle('hidden', !user);
+    if (unsubSettings) { unsubSettings(); unsubSettings = null; }
+    if (unsubSessions) { unsubSessions(); unsubSessions = null; }
+    if (unsubFeeds) { unsubFeeds(); unsubFeeds = null; }
+    if (unsubNappies) { unsubNappies(); unsubNappies = null; }
+    if (tickHandle) { clearInterval(tickHandle); tickHandle = null; }
+    if (!user) return;
+    showSection('sleep');
+    $('syncStatus').textContent = 'Syncing…';
+    unsubSettings = onSnapshot(settingsRef(), snap => {
+      if (snap.exists()) {
+        settings = { ...settings, ...snap.data() };
+        $('wakeTime').value = settings.wakeTime || '07:00';
+        $('bedTime').value = settings.bedTime || '19:30';
+        $('wakeMin').value = settings.wakeMin ?? 45;
+        $('wakeMax').value = settings.wakeMax ?? 75;
+      }
+      updateReminderStatus();
+      render();
+    }, () => { $('syncStatus').textContent = 'Sync issue'; });
+    const q = query(sessionsRef(), orderBy('startAt', 'desc'), limit(300));
+    unsubSessions = onSnapshot(q, snap => {
+      sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      $('syncStatus').textContent = 'Synced live';
+      render();
+    }, () => { $('syncStatus').textContent = 'Sync issue'; });
+    unsubFeeds = onSnapshot(query(feedsRef(), orderBy('timeAt', 'desc'), limit(300)), snap => {
+      feeds = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderActivity();
+    }, () => { $('syncStatus').textContent = 'Sync issue'; });
+    unsubNappies = onSnapshot(query(nappiesRef(), orderBy('timeAt', 'desc'), limit(300)), snap => {
+      nappies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderActivity();
+    }, () => { $('syncStatus').textContent = 'Sync issue'; });
+    tickHandle = setInterval(() => {
+      if (activeUser) { render(); checkReminder(); }
+    }, 1000);
+  });
+} catch (err) {
+  showError(err.message || String(err));
+}
+</script>
+</body>
+</html>
