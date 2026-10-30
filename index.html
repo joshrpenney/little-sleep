@@ -60,6 +60,38 @@ body{background:radial-gradient(ellipse at top left,#fff0f4 0,transparent 44%),v
 .install-btn{background:#fce8ef;color:#963d5d;padding:7px 10px;font-size:11px}
 .reminder-status{font-size:12px;color:var(--muted);margin:10px 0 0}
 @media(max-width:380px){.quick-stat{padding:10px 5px}.quick-stat .qs-value{font-size:16px}.quick-stat .qs-label{font-size:9px}}
+
+/* Premium visual refinement */
+:root{--ink:#292832;--muted:#817b83;--paper:#fbf7f8;--card:#fff;--line:#f0e5e9;--shadow:0 12px 34px rgba(94,53,69,.075)}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fff7fa 0,#fbf7f8 360px)}
+.wrap{max-width:760px}
+.panel,.quick-stat{border:1px solid rgba(232,211,220,.75);box-shadow:0 8px 28px rgba(100,60,76,.055);border-radius:23px}
+.panel{padding:21px}
+.brand{align-items:center}
+.brand h1{font-weight:850;letter-spacing:-1px}
+.brand p{letter-spacing:.15px}
+.hero{position:relative;overflow:hidden;border:1px solid #f4d9e3;background:linear-gradient(145deg,#f9dce7 0%,#fff5f7 62%,#fce9e9 100%);box-shadow:0 14px 34px rgba(174,92,121,.10)}
+.hero h2{font-size:clamp(23px,5vw,30px);letter-spacing:-.8px}
+.timer{font-variant-numeric:tabular-nums;letter-spacing:-2px;font-weight:750}
+.primary,.secondary,.danger,.quick-action,.nav-tab,.mini-btn{transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+.primary{box-shadow:0 6px 15px rgba(217,79,123,.17)}
+.primary:active,.secondary:active,.danger:active{transform:scale(.98)}
+.nav-tabs{padding:5px;background:#f5eaee;border:1px solid #f0e2e7;border-radius:20px}
+.nav-tab{border-radius:15px}
+.nav-tab.active{box-shadow:0 5px 13px rgba(217,79,123,.20)}
+.quick-action{border:1px solid #f1dce4;background:#fffafd;box-shadow:0 4px 12px rgba(100,60,76,.035);font-weight:700}
+.quick-action:active{transform:translateY(1px)}
+.field label{font-weight:700;color:#5d5058}
+.field input,.field select{min-height:46px;border-radius:13px;padding:11px 13px;box-shadow:inset 0 1px 2px rgba(60,30,40,.025)}
+.field input:focus,.field select:focus{outline:3px solid rgba(230,93,139,.14);border-color:#e65d8b}
+.section-head h3{letter-spacing:-.35px}
+.stat{border-radius:17px}
+.history-row{border-bottom:1px solid #f1e8eb}
+.mini-btn{border-radius:11px;font-weight:700}
+.notice{color:#766873}
+#showManualSleep{font-weight:700;border:1px solid #f0d5df}
+#manualSleepForm{padding:15px;background:rgba(255,255,255,.72);border:1px solid #f0dce3;border-radius:17px}
+@media(max-width:520px){.panel{padding:17px;border-radius:20px}.hero{padding:21px}.quick-actions{gap:7px}.quick-action{border-radius:14px}}
 </style>
 </head>
 <body>
